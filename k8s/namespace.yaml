@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: exam-samuel
+
+# Namespace je Kubernetes objekt, ktorý slúži na logické rozdelenie zdrojov v klastri.
+# Umožňuje izolovať a organizovať objekty ako pody, deploymenty, configmapy alebo
+# služby do oddelených priestorov, čo zjednodušuje správu a zabraňuje kolíziám názvov.
+# Tento Namespace s názvom 'exam-samuel' vytvára izolovaný priestor pre zdroje
+# súvisiace s konkrétnou aplikáciou alebo používateľom (v tomto prípade pravdepodobne
+# pre testovaciu alebo skúškovú aplikáciu).

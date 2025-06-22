@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: upload-config
+  namespace: exam-samuel
+data:
+  UPLOAD_DIR: "/uploads/"
+
+# ConfigMap je Kubernetes objekt, ktorý slúži na ukladanie konfigurácie aplikácie
+# vo forme kľúč-hodnota párov. Tieto dáta môžu byť použité ako environmentálne premenné,
+# konfiguračné súbory alebo iné nastavenia pre kontajnery v podoch.
+# Tento ConfigMap s názvom 'upload-config' v namespace 'exam-samuel' definuje
+# jednu hodnotu: UPLOAD_DIR s hodnotou "/uploads/". Táto hodnota môže byť
+# injektovaná do kontajnera (napr. ako environmentálna premenná) a použitá
+# v aplikácii na určenie priečinka pre nahrávanie súborov.

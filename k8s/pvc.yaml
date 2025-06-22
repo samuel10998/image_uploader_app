@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: upload-pvc
+  namespace: exam-samuel
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 500Mi
+
+
+# PersistentVolumeClaim (PVC) je Kubernetes objekt, ktorý umožňuje podom požadovať
+# úložisko od PersistentVolume (PV) bez nutnosti poznať detaily fyzického úložiska.
+# PVC slúži ako abstrakcia, ktorá spája požiadavky aplikácie s dostupným úložiskom
+# v klastri. Tento PersistentVolumeClaim s názvom 'upload-pvc' v namespace 'exam-samuel'
+# požaduje 500MiB úložiska s prístupovým režimom ReadWriteOnce (jeden pod môže zapisovať
+# a čítať). PVC je spojené s PersistentVolume (napr. 'upload-pv') a používa sa
+# v Deployment 'uploader-app' na ukladanie nahraných súborov do priečinka '/uploads'.

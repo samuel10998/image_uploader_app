@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: upload-pv
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /mnt/data/uploads
+
+# PersistentVolume (PV) je Kubernetes objekt, ktorý reprezentuje fyzické úložisko
+# v klastri, ako napríklad disk alebo priečinok na hostiteľskom systéme. PV umožňuje
+# trvalé ukladanie dát, ktoré prežijú životný cyklus podu. Tento PersistentVolume
+# s názvom 'upload-pv' definuje úložisko s kapacitou 1GiB, prístupovým režimom
+# ReadWriteOnce (jeden pod môže zapisovať a čítať) a používa priečinok
+# '/mnt/data/uploads' na hostiteľskom systéme ako zdroj dát. Tento PV je určený
+# na ukladanie nahraných súborov pre aplikáciu v namespace 'exam-samuel'.
