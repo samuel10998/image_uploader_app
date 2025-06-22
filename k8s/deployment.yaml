@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uploader-app
+  namespace: exam-samuel
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uploader
+  template:
+    metadata:
+      labels:
+        app: uploader
+    spec:
+      containers:
+        - name: php-uploader
+          image: php-uploader:latest
+          imagePullPolicy: Never  # <-- toto pridaj
+          ports:
+            - containerPort: 80
+          envFrom:
+            - secretRef:
+                name: upload-secret
+          volumeMounts:
+            - name: upload-storage
+              mountPath: /var/www/html/uploads
+      volumes:
+        - name: upload-storage
+          persistentVolumeClaim:
+            claimName: upload-pvc
+
+# Deployment je Kubernetes objekt, ktorý spravuje replikované inštancie aplikácie
+# (pody) a zabezpečuje ich automatické škálovanie, aktualizácie a obnovu v prípade zlyhania.
+# Tento Deployment s názvom 'uploader-app' v namespace 'exam-samuel' definuje jeden pod
+# s kontajnerom, ktorý spúšťa aplikáciu na nahrávanie súborov. Používa Docker obraz
+# 'php-uploader:latest', pripája ConfigMap 'upload-config' na nastavenie environmentálnej
+# premennej a pripája trvalý zväzok (Persistent Volume Claim) na ukladanie nahraných súborov.
