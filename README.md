@@ -13,14 +13,14 @@ Secret - sifrovane udaje pre aplikaciu alebo cluster (ak chceme ulozit infor. ak
 Jednoduchý web, kde používateľ môže nahrať obrázok do adresára `/uploads`.
 
 Prikazy ako sme isli:
-1: docker build -t php-uploader:latest . buildnovanie appky / containeru
-2: kubectl get ns - zistenie vsetkych namespace
-3: kubectl apply -f k8s/ - aplikuje vsetky tie subory co su v k8s priecinku
+1. docker build -t php-uploader:latest . buildnovanie appky / containeru
+2. kubectl get ns - zistenie vsetkych namespace
+3. kubectl apply -f k8s/ - aplikuje vsetky tie subory co su v k8s priecinku
 
-kubectl get all -n exam-samuel  ??? overenie zisti este
+4. kubectl get all -n exam-samuel  ??? overenie zisti este
 
 Zistenie co sa nachadza v lokalnom priecinku /uploads co sme si vytvorili
-kubectl exec -it -n exam-samuel $(kubectl get pod -n exam-samuel -l app=uploader -o jsonpath="{.items[0].metadata.name}") -- ls /uploads 
+1. kubectl exec -it -n exam-samuel $(kubectl get pod -n exam-samuel -l app=uploader -o jsonpath="{.items[0].metadata.name}") -- ls /uploads 
 
 ## Nasadenie
 ```bash
