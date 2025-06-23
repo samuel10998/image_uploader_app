@@ -1,0 +1,40 @@
+Stručný popis jednotlivých súborov
+
+app/index.php
+Spracováva každý HTTP request: zapíše čas, metódu a URI do logovacieho súboru (cestu LOG_DIR a názov LOG_FILENAME berie z ConfigMap a Secret), a v závislosti od módu (verbose vs. quiet) vráti JSON odpoveď.
+
+Dockerfile
+Stavia PHP–Apache image s povoleným mod_rewrite (pre všetky URI presmerovať na index.php cez .htaccess) a kopíruje kód aplikácie do /var/www/html.
+
+k8s/namespace.yaml
+Definuje vlastný Kubernetes namespace exam-samuel, v ktorom je aplikácia izolovaná od ostatných objektov v klastri.
+
+k8s/configmap.yaml
+Uchováva konfiguračné premenné: LOG_DIR (cesta k priečinku s logmi) a MODE (určuje, či API vracia podrobnú alebo skrátenú odpoveď).
+
+k8s/secret.yaml
+Uloží citlivú premennú LOG_FILENAME (napr. requests.log) zakódovanú v base64, aby sa názov log súboru nedať ľahko zmeniť bez autorizácie.
+
+k8s/pv.yaml
+Vytvára PersistentVolume na hostPath /mnt/data/logger, poskytuje fyzické úložisko (1 Gi) pre logy, ktoré zostanú zachované aj po reštarte.
+
+k8s/pvc.yaml
+PersistentVolumeClaim, ktorý žiada o 1 Gi úložiska s režimom ReadWriteOnce a pripája ho do Pod-u.
+
+k8s/deployment.yaml
+Nasadí Deployment s jedným replikovaným Pod-om:
+
+Načítava ConfigMap aj Secret cez envFrom
+
+Mountuje PVC do /logs
+
+Má nastavené readinessProbe a livenessProbe na overenie stavu kontajnera
+
+imagePullPolicy: Never používa lokálny Docker image php-logger:latest.
+
+k8s/service.yaml
+Vytvára Service typu NodePort na porte 80 (mapuje na host port 30082), aby bolo API dostupné cez http://localhost:30082.
+
+
+Čo aplikácia vlastne robí:
+Jednoduché PHP API prijíma ľubovoľné HTTP requesty, zaznamenáva ich (čas, metódu, URI) do perzistentného log súboru a vracia JSON odpoveď. Vďaka Kubernetes ConfigMap a Secret možno meniť cestu k logom, názov súboru aj režim odpovedí bez potreby rebuildu image, a pomocou readiness/liveness probe sa zabezpečuje vysoká dostupnosť a automatická obnova kontajnera.
