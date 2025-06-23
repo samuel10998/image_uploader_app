@@ -17,7 +17,7 @@ Prikazy ako sme isli:
 2. kubectl get ns - zistenie vsetkych namespace
 3. kubectl apply -f k8s/ - aplikuje vsetky tie subory co su v k8s priecinku
 
-4. kubectl get all -n exam-samuel  - Vypíše všetky Kubernetes objekty (pods, services, deployments, replicasets, atď.) v danom namespace. v tomto pripade exam-samuel ktory som si vytvoril. 
+4. kubectl get all -n exam-samuel  - Vypíše všetky Kubernetes objekty (pods, services, deployments, replicasets, atď.) v danom namespace. v tomto pripade exam-samuel ktory som si vytvoril.   // Overíš, či sú všetky časti aplikácie správne nasadené a bežia.
 
 Zistenie co sa nachadza v lokalnom priecinku /uploads co sme si vytvorili
 1. kubectl exec -it -n exam-samuel $(kubectl get pod -n exam-samuel -l app=uploader -o jsonpath="{.items[0].metadata.name}") -- ls /uploads 
