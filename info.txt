@@ -38,3 +38,13 @@ Vytvára Service typu NodePort na porte 80 (mapuje na host port 30082), aby bolo
 
 Čo aplikácia vlastne robí:
 Jednoduché PHP API prijíma ľubovoľné HTTP requesty, zaznamenáva ich (čas, metódu, URI) do perzistentného log súboru a vracia JSON odpoveď. Vďaka Kubernetes ConfigMap a Secret možno meniť cestu k logom, názov súboru aj režim odpovedí bez potreby rebuildu image, a pomocou readiness/liveness probe sa zabezpečuje vysoká dostupnosť a automatická obnova kontajnera.
+
+
+INFO o k8s suboroch (bez bonusu):
+Ok povedz ci toto je dobre: 
+1. namespace - vytvara oddeleny priestor pre zdroje aplikacii ako su pody. 
+2. configmap - uklada konfiguracie ako kluc, hodnoty, pary kt. môzu byt pouzite podmi, obsahuje konfiguracne nastavenia, 
+3. pv.yaml - je to fyzicke ulozisko, ktore môzu podi pouzivat. 
+4. pvc.yaml - pozaduje ulozisko od PV.yaml, kt splna urcite kriteria ako velkost, typ... , 
+5. deployment.yaml - zabezpecuje automaticke skalovanie a obnovu podov. Specifikuje ako applikacia ma byt nasadena.
+6. Service.yaml - poskytuje sietovy pristup pre podi aplikacie, Vytvara stabilnu sietovu adresu napr NodePort
